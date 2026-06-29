@@ -12,7 +12,7 @@ const SignUp = () => {
     gender: "",
   });
 
-  const {loading,signup}=useSignup()
+  const { loading, signup } = useSignup();
 
   const handleCheckboxChange = (gender) => {
     setInputs({
@@ -21,12 +21,10 @@ const SignUp = () => {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-await signup(inputs);
-
-  
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(inputs);
+  };
 
   return (
     <div className="w-full flex items-center justify-center">
@@ -50,9 +48,7 @@ await signup(inputs);
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="label">
-              <span className="label-text text-white">
-                Full Name
-              </span>
+              <span className="label-text text-white">Full Name</span>
             </label>
 
             <input
@@ -71,9 +67,7 @@ await signup(inputs);
 
           <div>
             <label className="label">
-              <span className="label-text text-white">
-                Username
-              </span>
+              <span className="label-text text-white">Username</span>
             </label>
 
             <input
@@ -92,9 +86,7 @@ await signup(inputs);
 
           <div>
             <label className="label">
-              <span className="label-text text-white">
-                Password
-              </span>
+              <span className="label-text text-white">Password</span>
             </label>
 
             <input
@@ -113,9 +105,7 @@ await signup(inputs);
 
           <div>
             <label className="label">
-              <span className="label-text text-white">
-                Confirm Password
-              </span>
+              <span className="label-text text-white">Confirm Password</span>
             </label>
 
             <input
@@ -144,11 +134,9 @@ await signup(inputs);
             Already have an account?
           </Link>
 
-          <button
-            type="submit"
-            className="btn btn-success btn-block mt-4"
-          >
-            Sign Up
+          <button type="submit" className="btn btn-success btn-block mt-4"
+          disabled = {loading}>
+            {loading ? <span className="loading loading-spinner"></span> : "Sign Up"}
           </button>
         </form>
       </div>

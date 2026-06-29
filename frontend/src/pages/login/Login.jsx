@@ -1,6 +1,19 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
+
+  const [username,setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+ const {loading,login}=useLogin()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login({username,password});
+  }
+
   return (
     <div className="w-full flex items-center justify-center">
       <div
@@ -21,7 +34,7 @@ const Login = () => {
           <span className="text-green-500"> ChatApp</span>
         </h1>
 
-        <form>
+        <form onSubmit = {handleSubmit}>
           {/* Username */}
           <div className="mb-4">
             <label className="label">
@@ -32,6 +45,8 @@ const Login = () => {
               type="text"
               placeholder="Enter Username"
               className="input input-bordered w-full"
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
             />
           </div>
 
@@ -45,6 +60,8 @@ const Login = () => {
               type="password"
               placeholder="Enter Password"
               className="input input-bordered w-full"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -57,8 +74,10 @@ const Login = () => {
           </Link>
 
           {/* Button */}
-          <button className="btn btn-success btn-block mt-5">
-            Login
+          <button className="btn btn-success btn-block mt-5"
+            disabled={loading}
+          >
+            {loading ? <span className="loading loading-spinner"></span> : "Login"}
           </button>
         </form>
       </div>
