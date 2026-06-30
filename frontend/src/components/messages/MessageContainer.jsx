@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
+import useConversation from "../../zustand/useConversation";
 
 const MessageContainer = () => {
-  const selectedConversation = null;
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+  useEffect(() => {
+    return () => {
+      setSelectedConversation(null);
+    };
+  }, [setSelectedConversation]);
 
   return (
     <div className="flex-1 flex flex-col">
@@ -13,11 +21,12 @@ const MessageContainer = () => {
         <>
           <div className="bg-slate-500 px-4 py-2 mb-2">
             <span className="label-text">To: </span>
-            <span className="font-bold text-white">John Doe</span>
+            <span className="font-bold text-white">
+              {selectedConversation.fullName}
+            </span>
           </div>
 
           <Messages />
-
           <MessageInput />
         </>
       )}
