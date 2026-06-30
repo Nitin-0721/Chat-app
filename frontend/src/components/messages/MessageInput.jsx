@@ -29,7 +29,7 @@ const MessageInput = () => {
 
         <button
           type="submit"
-          className="absolute inset-y-0 end-0 flex items-center pe-3"
+          className="absolute inset-y-0 inset-e-0 flex items-center pe-3"
           disabled={loading}
         >
           {loading ? (
