@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuthContext } from "./AuthContext";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 const SocketContext = createContext();
 
@@ -15,20 +15,21 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("https://chat-app-yt.onrender.com", {
+			const newSocket = io(import.meta.env.VITE_BACKEND_URL, {
 				query: {
 					userId: authUser._id,
 				},
 			});
 
-			setSocket(socket);
+			setSocket(newSocket);
 
-			// socket.on() is used to listen to the events. can be used both on client and server side
-			socket.on("getOnlineUsers", (users) => {
+			newSocket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
 			});
 
-			return () => socket.close();
+			return () => {
+				newSocket.close();
+			};
 		} else {
 			if (socket) {
 				socket.close();
@@ -37,5 +38,9 @@ export const SocketContextProvider = ({ children }) => {
 		}
 	}, [authUser]);
 
-	return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
+	return (
+		<SocketContext.Provider value={{ socket, onlineUsers }}>
+			{children}
+		</SocketContext.Provider>
+	);
 };
