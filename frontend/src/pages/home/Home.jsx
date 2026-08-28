@@ -11,7 +11,7 @@ const Home = () => {
 				className="
 					flex
 					w-full
-					h-[100dvh]
+					h-dvh
 					sm:h-[90vh]
 					sm:w-[95vw]
 					md:w-[90vw]
